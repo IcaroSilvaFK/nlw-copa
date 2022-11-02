@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider                  = "prisma-erd-generator"
+  theme                     = "forest"
+  includeRelationFromFields = true
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Pool {
+  id        String   @id @default(cuid())
+  title     String
+  code      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  @@map("pools")
+}
